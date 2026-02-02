@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# TypeScript compiled files in src
+src/**/*.js
+src/**/*.d.ts
+vite.config.js
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+data/chapters-draft/
+
+# Claude Code local files
+.claude/settings.local.json
+.claude/user-team-info.json
+.claude/tasks/
+CLAUDE.local.md

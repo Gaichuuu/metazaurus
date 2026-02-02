@@ -1,0 +1,1228 @@
+/* Sharp Zaurus LCD Screen Effects */
+
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,500;0,700;1,500;1,700&display=swap");
+
+/* ===========================================
+   COLOR PALETTE
+   - LCD Green: #9ead6f (base), #5e6e4a (dark), #c8d89a (light)
+   - Amber: #d4a857 (active/selected), #e8c878 (hover/light), #b8944a (dark)
+   =========================================== */
+
+/* LCD Screen with scanline effect */
+.lcd-screen {
+  position: relative;
+  background-color: #9ead6f;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* Subtle pixel grid overlay */
+.lcd-screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 2px 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* CRT tube bulge effect - convex glass vignette */
+.lcd-screen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Radial vignette - darker edges, lighter center */
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 50%,
+    transparent 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.08) 65%,
+    rgba(0, 0, 0, 0.18) 80%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Screen glare/reflection highlight */
+.lcd-screen > .crt-glare {
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  width: 40%;
+  height: 12%;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* Beveled inset border for LCD area */
+.lcd-bezel {
+  position: relative;
+  border: 4px solid;
+  border-color: #2a2a2a #5a5a5a #5a5a5a #2a2a2a;
+  box-shadow:
+    inset 2px 2px 8px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* ===========================================
+   SHELL BUTTONS (gray, outside LCD)
+   =========================================== */
+
+.zaurus-btn {
+  background: linear-gradient(145deg, #5a5a5a, #3a3a3a);
+  border: 2px solid;
+  border-color: #6a6a6a #2a2a2a #2a2a2a #6a6a6a;
+  padding: 6px 10px;
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  color: #ccc;
+  text-shadow: 1px 1px 0 #000;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.zaurus-btn:hover {
+  background: linear-gradient(145deg, #6a6a6a, #4a4a4a);
+  color: #fff;
+}
+
+.zaurus-btn:active,
+.zaurus-btn.active {
+  border-color: #2a2a2a #6a6a6a #6a6a6a #2a2a2a;
+  background: linear-gradient(145deg, #3a3a3a, #4a4a4a);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.zaurus-btn.active {
+  background: #5e6e4a;
+  color: #b8c88a;
+}
+
+.zaurus-icon-btn {
+  width: 48px;
+  height: 48px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zaurus-category-btn {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* ===========================================
+   LCD-STYLE COMPONENTS (inside LCD screen)
+   =========================================== */
+
+/* LCD-style buttons */
+.lcd-btn {
+  background: linear-gradient(180deg, #c8d89a 0%, #a8bd7f 50%, #98ad6f 100%);
+  border: 2px solid;
+  border-color: #d8e8aa #6a7a4a #6a7a4a #d8e8aa;
+  padding: 5px 8px;
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  color: #3a4a2a;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.08s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.lcd-btn:hover {
+  background: linear-gradient(180deg, #d8e8aa 0%, #c8d89a 50%, #b8c88a 100%);
+  color: #2a3a1a;
+  border-color: #e8f8ba #8a9a6a #8a9a6a #e8f8ba;
+}
+
+.lcd-btn:active {
+  border-color: #6a7a4a #d8e8aa #d8e8aa #6a7a4a;
+  background: linear-gradient(180deg, #8a9d5f 0%, #9ead6f 100%);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* AMBER active state */
+.lcd-btn.active {
+  border-color: #8a6a3a #dcb464 #dcb464 #8a6a3a;
+  background: linear-gradient(180deg, #b8944a 0%, #d4a857 50%, #c49847 100%);
+  color: #3a2a1a;
+  text-shadow:
+    0 0 4px rgba(212, 168, 87, 0.4),
+    1px 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.lcd-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* LCD icon button variant */
+.lcd-icon-btn {
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LCD flat button (for titlebar) */
+.lcd-btn-flat {
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  font-family: "VT323", monospace;
+  color: #c8d89a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+  border-radius: 2px;
+}
+
+.lcd-btn-flat:hover {
+  background: rgba(200, 216, 154, 0.25);
+  color: #e8f8c8;
+}
+
+.lcd-btn-flat:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* LCD category button variant */
+.lcd-category-btn {
+  width: 100%;
+  padding: 5px 8px;
+  text-align: left;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+}
+
+/* Active category button - solid amber fill, green text */
+.lcd-category-btn.active {
+  background: #d4a857;
+  color: #3a4a2a;
+}
+
+/* LCD sidebar containers */
+.lcd-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(120, 135, 90, 0.25) 0%,
+    rgba(142, 157, 111, 0.15) 100%
+  );
+}
+
+.lcd-sidebar-left {
+  border-right: 2px solid #5a6a3a;
+  min-width: 105px;
+  box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider between list and detail panels */
+.zaurus-panel-divider {
+  width: 2px;
+  background: linear-gradient(180deg, #5a6a3a 0%, #4a5a2a 50%, #5a6a3a 100%);
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.lcd-sidebar-right {
+  border-left: 2px solid #6a7a4a;
+}
+
+/* ===========================================
+   LIST VIEW STYLING
+   =========================================== */
+
+.zaurus-list {
+  width: 100%;
+}
+
+.zaurus-list-header {
+  display: flex;
+  background: linear-gradient(180deg, #4e5e3a 0%, #3e4e2a 100%);
+  color: #c8d89a;
+  font-weight: bold;
+  border-bottom: 2px solid #2a3a1a;
+  padding: 6px 10px;
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.zaurus-list-row {
+  display: flex;
+  border-bottom: 1px solid rgba(90, 100, 70, 0.4);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  color: #3a4a2a;
+  text-decoration: none;
+  transition: all 0.08s ease;
+}
+
+.zaurus-list-row:nth-child(even) {
+  background: rgba(142, 157, 111, 0.12);
+}
+
+/* Green hover state */
+.zaurus-list-row:hover {
+  background: rgba(100, 120, 74, 0.35);
+  color: #2a3a1a;
+}
+
+/* Selected state - green background, amber text */
+.zaurus-list-row.selected,
+.zaurus-list-row.selected:hover {
+  background: #6a7c53;
+  color: #e8c878 !important;
+}
+
+/* ===========================================
+   LCD-STYLE TITLE BAR
+   =========================================== */
+
+.zaurus-titlebar {
+  background: linear-gradient(to bottom, #5a5a5a, #3a3a3a);
+  border-bottom: 2px solid;
+  border-color: #2a2a2a;
+  padding: 4px 8px;
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: #b8c88a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* AMBER title glow */
+.lcd-titlebar {
+  background: linear-gradient(180deg, #5e6e4a 0%, #4a5a3a 100%);
+  border-bottom: 2px solid #3a4a2a;
+  padding: 6px 12px;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  color: #e8c878;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-shadow:
+    0 0 8px rgba(212, 168, 87, 0.4),
+    1px 1px 0 rgba(0, 0, 0, 0.4);
+  letter-spacing: 2px;
+}
+
+.lcd-titlebar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lcd-titlebar a:hover {
+  color: #f8e8b8;
+  text-shadow:
+    0 0 10px rgba(248, 232, 184, 0.6),
+    1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ===========================================
+   SCROLLBAR STYLING
+   =========================================== */
+
+.lcd-screen::-webkit-scrollbar {
+  width: 14px;
+}
+
+.lcd-screen::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #7a8a5a 0%, #8a9a6a 100%);
+  border-left: 2px solid #6a7a4a;
+}
+
+.lcd-screen::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6a7a4a 0%, #5a6a3a 100%);
+  border: 1px solid #4a5a3a;
+  border-radius: 2px;
+}
+
+.lcd-screen::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #b8944a 0%, #a88a3a 100%);
+}
+
+/* ===========================================
+   DETAIL VIEW CONTENT
+   =========================================== */
+
+.zaurus-detail {
+  padding: 10px 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  /* letter-spacing: 0.1px; */
+  color: #3a4a2a;
+  overflow-y: auto;
+  height: 100%;
+  line-height: 1.5;
+}
+
+/* Green title */
+.zaurus-detail h1 {
+  font-family: "VT323", monospace;
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: #3a4a2a;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  padding-bottom: 8px;
+  border-bottom: 2px solid #6a7a4a;
+  letter-spacing: 1px;
+}
+
+/* Section headings */
+.zaurus-detail h2 {
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #5a6a3a;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Bold and italic text */
+.zaurus-detail strong {
+  font-weight: bold;
+  color: #2a3a1a;
+}
+
+.zaurus-detail em {
+  font-style: italic;
+}
+
+.zaurus-detail h3 {
+  font-family: "VT323", monospace;
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin-top: 14px;
+  color: #3a4a2a;
+}
+
+.zaurus-detail p {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.zaurus-detail ul {
+  margin-left: 16px;
+  margin-bottom: 10px;
+  list-style-type: disc;
+  padding-left: 8px;
+}
+
+.zaurus-detail ol {
+  margin-left: 16px;
+  margin-bottom: 10px;
+  list-style-type: decimal;
+  padding-left: 8px;
+}
+
+.zaurus-detail li {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* Blockquotes - radio dialogue / quoted text */
+.zaurus-detail blockquote {
+  margin: 12px 0;
+  padding: 8px 12px;
+  background: rgba(90, 106, 58, 0.15);
+  /* border-left: 3px solid #6a7c52; */
+  font-style: italic;
+  color: #4a5a3a;
+}
+
+.zaurus-detail blockquote p {
+  margin-bottom: 4px;
+}
+
+.zaurus-detail blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tables */
+.zaurus-detail table {
+  width: 50%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.zaurus-detail.world-content table {
+  width: 100%;
+}
+
+.zaurus-detail th,
+.zaurus-detail td {
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(90, 106, 58, 0.3);
+}
+
+.zaurus-detail th {
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: #5a6a3a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(90, 106, 58, 0.15);
+  border-bottom: 2px solid #6a7a4a;
+}
+
+.zaurus-detail tr:nth-child(even) {
+  background: rgba(142, 157, 111, 0.08);
+}
+
+/* Horizontal rules - section dividers */
+.zaurus-detail hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6a7a4a, transparent);
+  margin: 20px 0;
+}
+
+/* Amber links */
+.zaurus-detail a {
+  color: #b8944a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184, 148, 74, 0.4);
+  transition: all 0.1s ease;
+}
+
+.zaurus-detail a:hover {
+  color: #d4a857;
+  border-bottom-color: #d4a857;
+  text-shadow: 0 0 4px rgba(212, 168, 87, 0.3);
+}
+
+/* Credits block - smaller, muted text for author/artist credits */
+.zaurus-detail .credits,
+.zaurus-detail .credits p {
+  font-size: 11px;
+  color: #5a6a3a;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.zaurus-detail .credits {
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.zaurus-detail .credits strong {
+  font-weight: 600;
+  color: #4a5a2a;
+}
+
+/* LCD-style images */
+.zaurus-detail img {
+  max-width: 100%;
+  height: auto;
+  filter: sepia(30%) hue-rotate(50deg) saturate(80%) contrast(90%) brightness(95%);
+  /* border: 3px solid #5e6e4a; */
+  /* border-radius: 2px; */
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #7a8a5a;
+  /* padding: 4px; */
+}
+
+/* Field label/value utility classes */
+.zaurus-field-label {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  color: #6a7a4a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.zaurus-field-value {
+  font-family: "VT323", monospace;
+  font-size: 17px;
+  color: #2a3a1a;
+  margin-bottom: 8px;
+  padding-left: 2px;
+  line-height: 1.4;
+}
+
+/* Back button */
+.zaurus-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  padding: 3px 8px;
+  margin-bottom: 10px;
+}
+
+/* ===========================================
+   LOADING AND EMPTY STATES
+   =========================================== */
+
+.zaurus-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  font-family: "VT323", monospace;
+  color: #d4a857;
+  font-size: 20px;
+  text-shadow: 0 0 6px rgba(212, 168, 87, 0.4);
+}
+
+.zaurus-loading::after {
+  content: "_";
+  animation: blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.zaurus-empty {
+  text-align: center;
+  padding: 32px;
+  font-family: "VT323", monospace;
+  color: #6a7a4a;
+  font-size: 18px;
+}
+
+/* ===========================================
+   RESPONSIVE STYLES
+   =========================================== */
+
+/* Mobile: sidebar moves to bottom as horizontal nav */
+@media (max-width: 640px) {
+  .lcd-screen {
+    flex-direction: column;
+  }
+
+  .lcd-sidebar-left {
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-right: none;
+    border-top: 2px solid #6a7a4a;
+    min-width: unset;
+    gap: 0;
+    padding: 4px 2px;
+    order: 1;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .lcd-category-btn {
+    width: auto;
+    white-space: nowrap;
+    padding: 6px 8px;
+    font-size: 13px;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lcd-category-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .lcd-category-btn span.flex {
+    gap: 0;
+    justify-content: center;
+  }
+
+  .lcd-category-btn span.flex > span:last-child {
+    display: none;
+  }
+
+  .lcd-screen > div:first-child {
+    order: 0;
+  }
+
+  .zaurus-detail {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .zaurus-detail h1 {
+    font-size: 20px;
+  }
+
+  .zaurus-detail h2 {
+    font-size: 13px;
+  }
+
+  /* Force images to fit container, overriding inline styles */
+  .zaurus-detail img {
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .zaurus-list-row {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  .lcd-titlebar {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  .zaurus-detail table {
+    width: 100% !important;
+    font-size: 12px;
+  }
+
+  .zaurus-detail th,
+  .zaurus-detail td {
+    padding: 4px 8px;
+  }
+}
+
+/* Tablet adjustments */
+@media (max-width: 768px) and (min-width: 641px) {
+  .lcd-sidebar-left {
+    min-width: 90px;
+  }
+
+  .lcd-category-btn {
+    padding: 5px 6px;
+    font-size: 13px;
+  }
+
+  .zaurus-detail {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   LOCKED CONTENT STYLES
+   ============================================ */
+
+.locked-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.locked-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: locked-pulse 2s ease-in-out infinite;
+}
+
+@keyframes locked-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.locked-title {
+  font-family: "VT323", monospace;
+  font-size: 24px;
+  color: #c74a4a;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(199, 74, 74, 0.5);
+}
+
+.locked-subtitle {
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: #5a6a3a;
+  margin-bottom: 24px;
+}
+
+.locked-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.locked-input {
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  padding: 12px 16px;
+  background: rgba(94, 110, 74, 0.2);
+  border: 2px solid #5a6a3a;
+  color: #3a4a2a;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.locked-input:focus {
+  outline: none;
+  border-color: #e8c878;
+  box-shadow: 0 0 10px rgba(232, 200, 120, 0.3);
+}
+
+.locked-input::placeholder {
+  color: #6a7a4a;
+}
+
+.locked-submit {
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, #5a6a3a 0%, #4a5a2a 100%);
+  border: 2px solid #3a4a2a;
+  color: #c8d89a;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.15s ease;
+}
+
+.locked-submit:hover {
+  background: linear-gradient(180deg, #6a7a4a 0%, #5a6a3a 100%);
+  border-color: #e8c878;
+  color: #e8c878;
+}
+
+.locked-hint {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  color: #5e6e4a;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.locked-error {
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: #c74a4a;
+  margin-top: 16px;
+  animation: error-flash 0.5s ease;
+}
+
+@keyframes error-flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.3;
+  }
+}
+
+/* Unlock success state */
+.locked-content.unlocking {
+  animation: unlock-fade-in 0.3s ease;
+}
+
+.locked-icon.unlocked {
+  animation: unlock-icon 0.5s ease;
+  color: #7a9a4a;
+}
+
+@keyframes unlock-icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.locked-title.success {
+  color: #7a9a4a;
+  text-shadow: 0 0 10px rgba(122, 154, 74, 0.5);
+  animation: success-glow 1s ease infinite;
+}
+
+@keyframes success-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(122, 154, 74, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(122, 154, 74, 0.8);
+  }
+}
+
+.unlock-progress {
+  width: 100%;
+  max-width: 280px;
+  height: 8px;
+  background: rgba(94, 110, 74, 0.3);
+  border: 1px solid #5a6a3a;
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.unlock-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7a9a4a, #9aba6a);
+  animation: progress-fill 1.3s ease-out forwards;
+}
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes unlock-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.locked-static {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: static-scroll 0.5s linear infinite;
+}
+
+@keyframes static-scroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
+}
+
+/* ============================================
+   CORRUPTED / GLITCH EFFECT STYLES
+   ============================================ */
+
+.corrupted-content {
+  position: relative;
+  overflow: hidden; /* Prevents skew from causing whitespace */
+}
+
+/* Subtle glitch animation - very occasional micro-shifts */
+.corrupted-content .zaurus-detail {
+  animation: glitch-subtle 6s infinite ease-in-out;
+}
+
+@keyframes glitch-subtle {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  92% {
+    transform: translate(0, 0);
+  }
+  93% {
+    transform: translate(-1px, 0);
+  }
+  94% {
+    transform: translate(1px, 0);
+  }
+  95% {
+    transform: translate(0, 0);
+  }
+  97% {
+    transform: translate(0.5px, 0);
+  }
+  98% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Subtle color shift - rare and gentle */
+.corrupted-content .zaurus-detail {
+  animation:
+    glitch-subtle 6s infinite ease-in-out,
+    color-shift-subtle 12s infinite ease-in-out;
+}
+
+@keyframes color-shift-subtle {
+  0%,
+  94%,
+  100% {
+    filter: none;
+  }
+  95% {
+    filter: hue-rotate(3deg) saturate(1.02);
+  }
+  96% {
+    filter: hue-rotate(-2deg);
+  }
+  97% {
+    filter: none;
+  }
+}
+
+/* Scan line effect */
+/* .corrupted-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(180, 60, 60, 0.05) 40%,
+    rgba(180, 60, 60, 0.1) 50%,
+    rgba(180, 60, 60, 0.05) 60%,
+    transparent 100%
+  );
+  animation: scan-line-fast 3s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+} */
+
+@keyframes scan-line-fast {
+  0% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(calc(100vh + 10px));
+  }
+}
+
+/* Corrupted warning banner */
+.corrupted-banner {
+  font-family: "VT323", monospace;
+  font-size: 12px;
+  color: #c74a4a;
+  background: rgba(199, 74, 74, 0.1);
+  border: 1px solid rgba(199, 74, 74, 0.3);
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  text-align: center;
+  animation: banner-flicker 3s infinite;
+}
+
+@keyframes banner-flicker {
+  0%,
+  92%,
+  94%,
+  96%,
+  100% {
+    opacity: 1;
+  }
+  93%,
+  95% {
+    opacity: 0.5;
+  }
+}
+
+/* Homepage pulse animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Homepage scan line effect (only on homepage, not content pages) */
+.homepage-terminal {
+  position: relative;
+}
+
+.homepage-terminal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(180, 60, 60, 0.05) 40%,
+    rgba(180, 200, 138, 0.15) 50%,
+    rgba(180, 200, 138, 0.08) 60%,
+    transparent 100%
+  );
+  animation: homepage-scan-line 3s linear infinite;
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes homepage-scan-line {
+  0% {
+    top: -48px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+/* ===========================================
+   CARD BINDER STYLES
+   =========================================== */
+
+/* Full-page binder background */
+.cards-binder-bg {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+}
+
+/* Lighter binder background for sets with dark card borders (e.g., Sample) */
+.cards-binder-bg-light {
+  background: linear-gradient(135deg, #2a3a2a 0%, #3a4a3a 50%, #2a3a2a 100%);
+}
+
+/* Scrollable 3-column card grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  /* max-width: 600px; */
+  margin: 0 auto;
+}
+
+/* Individual card slot */
+.card-slot {
+  aspect-ratio: 63 / 88; /* Standard card ratio */
+  border-radius: 6px;
+  overflow: hidden;
+  animation: card-glitch 8s infinite ease-in-out;
+}
+
+@keyframes card-glitch {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+  88% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+  89% {
+    transform: translate(-0.5px, 0);
+    filter: hue-rotate(5deg);
+  }
+  90% {
+    transform: translate(0.5px, 0);
+    filter: hue-rotate(-3deg);
+  }
+  91% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Interactive card slot with hover effect */
+.card-slot-interactive {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.card-slot-interactive:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  animation: none;
+  filter: brightness(1.1);
+}
+
+.card-slot-interactive:active {
+  transform: scale(1.02);
+}
