@@ -721,8 +721,8 @@
   }
 
   .zaurus-list-row {
-    padding: 6px 8px;
-    font-size: 13px;
+    padding: 10px 12px;
+    font-size: 16px;
   }
 
   .lcd-titlebar {
@@ -733,11 +733,15 @@
   .zaurus-detail table {
     width: 100% !important;
     font-size: 12px;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .zaurus-detail th,
   .zaurus-detail td {
     padding: 4px 8px;
+    white-space: nowrap;
   }
 }
 

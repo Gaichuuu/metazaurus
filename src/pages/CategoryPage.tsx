@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCategoryList } from "../hooks/useWikiData";
 import { MarkdownContent } from "../components/content/MarkdownContent";
@@ -66,14 +66,24 @@ function EntryContent({
   );
 }
 
+const isMobile = () => window.matchMedia("(pointer: coarse)").matches;
+
 export function CategoryPage() {
   const { category } = useParams<{ category: string }>();
   const categoryType = (category || "characters") as CategoryType;
   const { entries, loading } = useCategoryList(categoryType);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
-  const [listOpen, setListOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(isMobile);
   const [unlockedFiles, setUnlockedFiles] = useState<Set<string>>(new Set());
   const config = getCategoryConfig(categoryType);
+
+  // Reopen list on mobile when category changes
+  useEffect(() => {
+    if (isMobile()) {
+      setListOpen(true);
+      setSelectedSlug(null);
+    }
+  }, [categoryType]);
 
   const selectedEntry = useMemo(() => {
     if (entries.length === 0) return null;
@@ -102,7 +112,7 @@ export function CategoryPage() {
       <button
         type="button"
         onClick={() => setListOpen(!listOpen)}
-        className="md:hidden fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
+        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
         aria-label={listOpen ? "Close list" : "Open list"}
       >
         {listOpen ? "✕" : "☰"}
@@ -110,7 +120,7 @@ export function CategoryPage() {
 
       {listOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-30"
+          className="md:hidden absolute inset-0 bg-black/50 z-30"
           onClick={() => setListOpen(false)}
         />
       )}
@@ -118,15 +128,18 @@ export function CategoryPage() {
       <div
         className={`
           flex-shrink-0 flex flex-col overflow-hidden bg-[#9ead6f]
-          fixed md:relative inset-y-0 left-0 z-40
+          absolute md:relative inset-y-0 left-0 z-40
           w-64 md:w-1/3 md:max-w-xs
           transform transition-transform duration-200 ease-in-out
           ${listOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
         <div className="zaurus-list-header flex-shrink-0 flex">
+          <span className="md:hidden w-full">
+            {config?.label || categoryType.charAt(0).toUpperCase() + categoryType.slice(1)}
+          </span>
           {config?.listColumns.map((col) => (
-            <span key={col.key} className={col.width}>
+            <span key={col.key} className={`${col.width} hidden md:inline`}>
               {col.header}
             </span>
           ))}

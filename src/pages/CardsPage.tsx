@@ -37,7 +37,7 @@ function CardCell({
 
   const card = cards[index];
   return (
-    <div style={style} className="p-1.5">
+    <div style={style} className="p-1">
       <button
         type="button"
         className="card-slot card-slot-interactive w-full h-full"
@@ -117,7 +117,7 @@ function CardGridView({ cardSet, onCardClick }: CardGridViewProps) {
     cardSet.id === "sample" ? "cards-binder-bg-light" : "cards-binder-bg";
 
   return (
-    <div className={`${bgClass} h-full w-full p-4`}>
+    <div className={`${bgClass} h-full w-full p-2`}>
       <div ref={containerRef} className="h-full w-full overflow-x-hidden">
         {gridConfig && dimensions.width > 0 && (
           <Grid
@@ -176,11 +176,13 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
   );
 }
 
+const isMobile = () => window.matchMedia("(pointer: coarse)").matches;
+
 export function CardsPage() {
   const [selectedSetId, setSelectedSetId] = useState<string>(
     cardSets[0]?.id ?? ""
   );
-  const [listOpen, setListOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(isMobile);
   const [selectedCard, setSelectedCard] = useState<SelectedCard | null>(null);
 
   const selectedSet = useMemo(() => {
@@ -203,7 +205,7 @@ export function CardsPage() {
       <button
         type="button"
         onClick={() => setListOpen(!listOpen)}
-        className="md:hidden fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
+        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
         aria-label={listOpen ? "Close list" : "Open list"}
       >
         {listOpen ? "✕" : "☰"}
@@ -211,7 +213,7 @@ export function CardsPage() {
 
       {listOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-30"
+          className="md:hidden absolute inset-0 bg-black/50 z-30"
           onClick={() => setListOpen(false)}
         />
       )}
@@ -219,15 +221,16 @@ export function CardsPage() {
       <div
         className={`
           flex-shrink-0 flex flex-col overflow-hidden bg-[#9ead6f]
-          fixed md:relative inset-y-0 left-0 z-40
+          absolute md:relative inset-y-0 left-0 z-40
           w-64 md:w-1/3 md:max-w-xs
           transform transition-transform duration-200 ease-in-out
           ${listOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
         <div className="zaurus-list-header flex-shrink-0 flex">
-          <span className="flex-1">Set</span>
-          <span className="w-16 text-center">Cards</span>
+          <span className="md:hidden w-full">Cards</span>
+          <span className="flex-1 hidden md:inline">Set</span>
+          <span className="w-16 text-center hidden md:inline">Cards</span>
         </div>
 
         <div className="flex-1 overflow-y-auto">

@@ -67,7 +67,11 @@ export function LockedContent({
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter access code..."
           className="locked-input"
-          autoFocus
+          autoFocus={!window.matchMedia("(pointer: coarse)").matches}
+          autoComplete="off"
+          data-lpignore="true"
+          data-1p-ignore
+          data-form-type="other"
         />
         <button type="submit" className="locked-submit">
           DECRYPT

@@ -10,9 +10,9 @@ export const CARD_GRID = {
   /** Number of columns in the card grid */
   COLUMNS: 4,
   /** Gap between cards in pixels */
-  GAP: 12,
+  GAP: 8,
   /** Padding around the grid in pixels */
-  PADDING: 16,
+  PADDING: 8,
   /** Card aspect ratio (width / height) - standard TCG 63:88 */
   ASPECT_RATIO: 63 / 88,
 } as const;
