@@ -1,8 +1,0 @@
-# User-specific configuration
-user-team-info.json
-
-# Local settings (personal overrides)
-settings.local.json
-
-# Task-specific context
-tasks/
