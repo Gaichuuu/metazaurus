@@ -3,12 +3,6 @@ node_modules/
 
 # Build output
 dist/
-build/
-
-# TypeScript compiled files in src
-src/**/*.js
-src/**/*.d.ts
-vite.config.js
 
 # Environment
 .env
@@ -25,11 +19,9 @@ vite.config.js
 .DS_Store
 Thumbs.db
 
-# Data
-data/chapters-draft/
+# Logs
+*.log
 
-# Claude Code local files
-.claude/settings.local.json
-.claude/user-team-info.json
-.claude/tasks/
-CLAUDE.local.md
+# Local files
+.claude/
+CLAUDE.md
