@@ -3,7 +3,7 @@
   "description": "The ultimate PDA reader application for MetaZoo: Cryptid Nation lore, built with Zaurus-inspired LCD aesthetic",
   "homepage": "https://www.metazaurus.com",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "sitemap": "tsx scripts/generate-sitemap.ts",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -41,6 +43,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.7.4",
     "tailwindcss": "^3.4.19",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "npm:rolldown-vite@7.2.5",
