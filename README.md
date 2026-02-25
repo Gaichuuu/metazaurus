@@ -30,9 +30,21 @@ npm run dev
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
+# Deploy to production
+npm run deploy
 ```
+
+### Deployment
+
+Deployment requires a `.deploy.env` file with:
+
+```
+DEPLOY_USER="your-user"
+DEPLOY_HOST="your-host"
+DEPLOY_PATH="~/your-path/"
+```
+
+`npm run deploy` builds the project, generates the sitemap, and rsyncs everything to your server.
 
 ## Structure
 
@@ -53,6 +65,9 @@ data/
 ├── locations/
 ├── world/
 └── codex/
+
+scripts/             # Deploy and sitemap scripts
+nginx/               # Server config
 
 ```
 
