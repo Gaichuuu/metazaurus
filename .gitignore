@@ -11,7 +11,6 @@ dist/
 
 # IDE
 .idea/
-.vscode/
 *.swp
 *.swo
 
@@ -23,5 +22,6 @@ Thumbs.db
 *.log
 
 # Local files
+.deploy.env
 .claude/
 CLAUDE.md

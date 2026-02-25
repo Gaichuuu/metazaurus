@@ -1,15 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useCategoryList } from "../hooks/useWikiData";
 import { MarkdownContent } from "../components/content/MarkdownContent";
 import { PdfViewer } from "../components/content/PdfViewer";
 import { LockedContent } from "../components/content/LockedContent";
 import { getCategoryConfig } from "../config/categories";
-import {
-  getSecretConfig,
-  isFileUnlocked,
-  unlockFile,
-} from "../config/secretFiles";
+import { getSecretConfig, isFileUnlocked, unlockFile } from "../config/secretFiles";
 import type { CategoryType, WikiEntry } from "../types/wiki";
 
 interface EntryContentProps {
@@ -38,8 +34,7 @@ function EntryContent({
     onUnlock(fileKey);
   };
 
-  const contentClassName =
-    categoryType === "world" ? "world-content" : undefined;
+  const contentClassName = categoryType === "world" ? "world-content" : undefined;
 
   const content = (
     <MarkdownContent content={entry.rawMarkdown} className={contentClassName} />
@@ -59,40 +54,40 @@ function EntryContent({
     );
   }
 
-  return (
-    <div className="h-full overflow-y-auto p-4">
-      {content}
-    </div>
-  );
+  return <div className="h-full overflow-y-auto p-4">{content}</div>;
 }
 
 const isMobile = () => window.matchMedia("(pointer: coarse)").matches;
 
 export function CategoryPage() {
-  const { category } = useParams<{ category: string }>();
+  const { category, slug } = useParams<{ category: string; slug: string }>();
+  const navigate = useNavigate();
   const categoryType = (category || "characters") as CategoryType;
   const { entries, loading } = useCategoryList(categoryType);
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [listOpen, setListOpen] = useState(isMobile);
   const [unlockedFiles, setUnlockedFiles] = useState<Set<string>>(new Set());
   const config = getCategoryConfig(categoryType);
 
-  // Reopen list on mobile when category changes
+  useEffect(() => {
+    if (!slug && entries.length > 0) {
+      navigate(`/${categoryType}/${entries[0].slug}`, { replace: true });
+    }
+  }, [slug, entries, categoryType, navigate]);
+
   useEffect(() => {
     if (isMobile()) {
       setListOpen(true);
-      setSelectedSlug(null);
     }
   }, [categoryType]);
 
   const selectedEntry = useMemo(() => {
     if (entries.length === 0) return null;
-    if (selectedSlug) {
-      const found = entries.find((e) => e.slug === selectedSlug);
+    if (slug) {
+      const found = entries.find((e) => e.slug === slug);
       if (found) return found;
     }
     return entries[0];
-  }, [entries, selectedSlug]);
+  }, [entries, slug]);
 
   if (loading) {
     return <div className="zaurus-loading">Loading...</div>;
@@ -102,8 +97,8 @@ export function CategoryPage() {
     return <div className="zaurus-empty">No entries found for {category}</div>;
   }
 
-  const handleEntrySelect = (slug: string) => {
-    setSelectedSlug(slug);
+  const handleEntrySelect = (entrySlug: string) => {
+    navigate(`/${categoryType}/${entrySlug}`);
     setListOpen(false);
   };
 
@@ -136,7 +131,8 @@ export function CategoryPage() {
       >
         <div className="zaurus-list-header flex-shrink-0 flex">
           <span className="md:hidden w-full">
-            {config?.label || categoryType.charAt(0).toUpperCase() + categoryType.slice(1)}
+            {config?.label ||
+              categoryType.charAt(0).toUpperCase() + categoryType.slice(1)}
           </span>
           {config?.listColumns.map((col) => (
             <span key={col.key} className={`${col.width} hidden md:inline`}>

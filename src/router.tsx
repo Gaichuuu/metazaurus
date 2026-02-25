@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
         element: <CardsPage />,
       },
       {
-        path: ":category",
+        path: ":category/:slug?",
         element: <CategoryPage />,
       },
     ],
