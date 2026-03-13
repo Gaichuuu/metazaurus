@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { UNLOCK_ANIMATION_DELAY_MS } from "../../constants";
+import { isTouchDevice } from "../../utils/isTouchDevice";
 
 interface LockedContentProps {
   hint?: string;
-  correctPassword: string;
+  correctPassword: string | string[];
   onUnlockComplete: () => void;
   children: React.ReactNode;
 }
@@ -24,7 +25,11 @@ export function LockedContent({
     e.preventDefault();
     const enteredPassword = password.toLowerCase().trim();
 
-    if (enteredPassword === correctPassword) {
+    const passwords = Array.isArray(correctPassword)
+      ? correctPassword
+      : [correctPassword];
+
+    if (passwords.includes(enteredPassword)) {
       setError(false);
       setLockState("unlocking");
       setTimeout(() => {
@@ -67,7 +72,7 @@ export function LockedContent({
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter access code..."
           className="locked-input"
-          autoFocus={!window.matchMedia("(pointer: coarse)").matches}
+          autoFocus={!isTouchDevice()}
           autoComplete="off"
           data-lpignore="true"
           data-1p-ignore

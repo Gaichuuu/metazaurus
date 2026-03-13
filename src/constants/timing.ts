@@ -1,7 +1,3 @@
-/**
- * Timing constants for animations and delays
- */
-
 /** Blinking cursor interval in milliseconds */
 export const CURSOR_BLINK_INTERVAL_MS = 530;
 
