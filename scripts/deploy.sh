@@ -22,6 +22,9 @@ npm run build
 echo "==> Generating sitemap..."
 npx tsx scripts/generate-sitemap.ts
 
+echo "==> Generating meta manifest..."
+npx tsx scripts/generate-meta.ts
+
 echo "==> Deploying dist/ to ${REMOTE}..."
 rsync -avz --delete \
   dist/ \
