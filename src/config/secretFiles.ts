@@ -2,10 +2,9 @@
  * Configuration for files with special access states
  * - locked: Requires password to view
  */
-
 export interface SecretFileConfig {
   locked?: {
-    password: string;
+    password: string | string[];
     hint?: string;
   };
 }
@@ -23,10 +22,17 @@ export const secretFiles: Record<string, SecretFileConfig> = {
       hint: "Ever since the ____ has shattered",
     },
   },
-  "book/chapter-7": {
+  "book/7-the-incredibly-amazingly-effective-training-gizmo-box-9001-p9001-for-short-patent-pending": {},
+  "characters/crowley": {
     locked: {
-      password: "p9001",
-      hint: "_____ for short (Patent Pending)",
+      password: ["us", "usa", "united states"],
+      hint: "Where is Crowley buried?",
+    },
+  },
+  "world/evergreen-casters": {
+    locked: {
+      password: ["thirteen", "13"],
+      hint: "How many Evergreen Casters are officially known?",
     },
   },
 };
