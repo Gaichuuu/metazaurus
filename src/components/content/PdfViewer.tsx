@@ -43,8 +43,8 @@ export function PdfViewer({ url }: PdfViewerProps) {
 
   if (error) {
     return (
-      <div className="h-full flex items-center justify-center bg-neutral-800">
-        <div className="text-red-400 text-center">
+      <div className="h-full flex items-center justify-center bg-zaurus-shell-dark">
+        <div className="text-zaurus-error text-center">
           <div className="text-2xl mb-2">⚠</div>
           <div>{error}</div>
         </div>
@@ -55,13 +55,13 @@ export function PdfViewer({ url }: PdfViewerProps) {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto flex flex-col items-center bg-neutral-800 py-4 px-4"
+      className="h-full overflow-y-auto flex flex-col items-center bg-zaurus-shell-dark py-4 px-4"
     >
       <Document
         file={url}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
-        loading={<div className="text-white">Loading PDF...</div>}
+        loading={<div className="text-zaurus-lcd-light">Loading PDF...</div>}
       >
         {numPages &&
           containerWidth &&

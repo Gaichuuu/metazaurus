@@ -159,7 +159,7 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
       role="dialog"
       aria-modal="true"
       aria-label={`${card.name} card detail`}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-zaurus-overlay/80 p-4"
       onClick={onClose}
     >
       <div className="relative max-w-md w-full" onClick={(e) => e.stopPropagation()}>
@@ -168,7 +168,7 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
           alt={`${card.number}. ${card.name}${card.variant ? ` (${card.variant})` : ""}`}
           className="w-full h-auto rounded-lg shadow-2xl"
         />
-        <div className="mt-3 text-center text-white font-mono">
+        <div className="mt-3 text-center text-zaurus-lcd-light font-mono">
           <div className="text-lg font-bold">{card.name}</div>
           <div className="text-sm opacity-70">
             #{card.number} {card.variant ? `(${card.variant})` : ""} - {cardSet.name}
@@ -209,7 +209,7 @@ export function CardsPage() {
       <button
         type="button"
         onClick={() => setListOpen(!listOpen)}
-        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
+        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-zaurus-amber text-zaurus-lcd-light shadow-lg flex items-center justify-center"
         aria-label={listOpen ? "Close list" : "Open list"}
       >
         {listOpen ? "✕" : "☰"}
@@ -218,7 +218,7 @@ export function CardsPage() {
       {listOpen && (
         <button
           type="button"
-          className="md:hidden absolute inset-0 bg-black/50 z-30"
+          className="md:hidden absolute inset-0 bg-zaurus-overlay/50 z-30"
           onClick={() => setListOpen(false)}
           aria-label="Close sidebar"
         />

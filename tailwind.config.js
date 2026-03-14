@@ -19,6 +19,10 @@ export default {
           "btn-face": "#4A4A4A",
           "btn-highlight": "#6A6A6A",
           "btn-shadow": "#2A2A2A",
+          // Semantic colors
+          "amber": "#d4a857",
+          "error": "#c74a4a",
+          "overlay": "#000000",
         },
       },
       fontFamily: {
