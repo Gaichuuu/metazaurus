@@ -2,10 +2,15 @@
   RewriteEngine On
   RewriteBase /
 
-  # If the requested file or directory exists, serve it directly
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
+  # Serve existing files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
 
-  # Otherwise, redirect all requests to index.html
-  RewriteRule ^ index.html [L]
+  # Bot detection → PHP SEO handler
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Twitterbot|Discordbot|Slackbot|LinkedInBot|WhatsApp|TelegramBot|Applebot|Google.*snippet|Googlebot|bingbot|SkypeUriPreview|redditbot|Meta-ExternalAgent) [NC]
+  RewriteRule ^ /index.php [L]
+
+  # All other non-file requests → SPA
+  RewriteRule ^ /index.html [L]
 </IfModule>
