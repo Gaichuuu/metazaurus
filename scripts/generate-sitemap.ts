@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { extractTitle, deriveSlug } from "../src/utils/slug";
 
 const BASE_URL = "https://metazaurus.com";
 
@@ -9,6 +10,7 @@ const categories = [
   "world",
   "codex",
   "book",
+  "fanfic",
   "magazine",
   "manga",
 ];
@@ -44,7 +46,9 @@ function generateSitemap(): string {
 
     const files = fs.readdirSync(categoryDir).filter((f) => f.endsWith(".md"));
     for (const file of files) {
-      const slug = file.replace(/\.md$/, "");
+      const content = fs.readFileSync(path.join(categoryDir, file), "utf-8");
+      const title = extractTitle(content, file);
+      const slug = deriveSlug(title, file);
       urls.push({
         loc: `${BASE_URL}/${category}/${slug}`,
         priority: "0.5",
