@@ -36,6 +36,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://metazaurus.com/fanfic</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://metazaurus.com/magazine</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -47,6 +52,16 @@
   </url>
   <url>
     <loc>https://metazaurus.com/characters/adam-ackler</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/characters/benjamin-bunyan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/characters/crowley</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -106,7 +121,32 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://metazaurus.com/world/caster-powers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/world/dreadlords</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/world/evergreen-casters</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/world/magical-motifs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://metazaurus.com/world/power-ranking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/world/real-world-artifacts</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -121,42 +161,67 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://metazaurus.com/codex/keyword-index</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/codex/one-shots</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://metazaurus.com/codex/rules</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-1</loc>
+    <loc>https://metazaurus.com/codex/things-to-remember</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-2</loc>
+    <loc>https://metazaurus.com/book/1-cryptid-nation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-3</loc>
+    <loc>https://metazaurus.com/book/2-escape-from-quimblys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-4</loc>
+    <loc>https://metazaurus.com/book/3-the-battle-of-loveland-castle</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-5</loc>
+    <loc>https://metazaurus.com/book/4-golden-eyes</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-6</loc>
+    <loc>https://metazaurus.com/book/5-a-close-encounter-of-the-slimy-kind</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://metazaurus.com/book/chapter-7</loc>
+    <loc>https://metazaurus.com/book/6-crossing-the-crosswick</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/book/7-the-incredibly-amazingly-effective-training-gizmo-box-9001-p9001-for-short-patent-pending</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/book/8-the-cincinnati-convoy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://metazaurus.com/fanfic/chapter-1</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
