@@ -1,21 +1,27 @@
 # Adam Ackler
 
-**Adam Ackler [INTJ - Foil]**<br>
-_18 • Mystery_
+<div class="character-stats">
+<strong>Personality:</strong> Introverted, Intuitive, Thinking, Judging<br>
+<strong>Archetype:</strong> Foil<br>
+<strong>Age:</strong> 18<br>
+<strong>Location:</strong> Unknown
+</div>
 
 ## Role in Story
 
-Adam is our anti-hero, the foil and challenge and rival and best friend of our hero, Sam Sinclair
+Adam is our anti-hero, the foil and challenge and rival and best friend of our hero, Sam Sinclair.
 
 ## Goal
 
-Adam’s goal is to gain as much power as he possibly can in order to prevent what happened to him as a child from every happening again. Hence, when it did happen again as he was away training at Quimblys, he decided to leave Quimblys and strike out on his own, not satisfied with his progress (we assume that he coldly went off, not caring, but it’s revealed by Rose that this is not true) It is for this reason why he seeks out the aid of the person who believes to be the most powerful Evergreen Caster, Indrid Cold, although Rose believes it’s because he actually wants to defeat him because he blames him for the Mothman attacks.
+Adam’s goal is to gain as much power as he possibly can in order to prevent what happened to him as a child from ever happening again. Hence, when it did happen again while he was away training at Quimblys, he decided to leave and strike out on his own, not satisfied with his progress (we assume that he coldly went off, not caring, but it’s revealed by Rose that this is not true).
+
+It is for this reason why he seeks out the aid of the person he believes to be the most powerful Evergreen Caster, Indrid Cold, although Rose believes it’s because he actually wants to defeat him because he blames him for the Mothman attacks.
 
 _Main Goal: Kill Indrid Cold_
 
 ## Physical Description
 
-Adam is 6’0, slender build, and wears professional attire. He has jet-black hair and circular glasses. He is white with blue eyes, and freckles just barely visible on his cheeks and nose.
+Adam is 6’0, slender build, and wears professional attire. He has jet-black hair and circular glasses "a little too reminiscent of Harry Potter to be entirely an accident." He is white with blue eyes, and freckles just barely visible on his cheeks and nose.
 
 Despite his nerdy appearance, he was “only ever bullied once” and has become somewhat of a local star in both sports and academics.
 
@@ -39,7 +45,10 @@ Rogue Caster
 
 ## Habits/Mannerisms
 
-Adam reads constantly, almost as much as he trains.
+- Reads constantly, almost as much as he trains
+- Avoids eye contact when lying or concealing emotions
+
+---
 
 ## Background
 
@@ -51,6 +60,8 @@ Adam must train under the one he believes to be responsible for the tragedy that
 
 Adam’s strength (and weakness) lies in the fact that he struck out on his own, and through his isolation he seeks to save those who in the end think Adam abandoned them.
 
+---
+
 ## Powers
 
 | Beginning           | End                             | Potential  |
@@ -59,10 +70,26 @@ Adam’s strength (and weakness) lies in the fact that he struck out on his own,
 | 250,000\*           | 300,000\*\*                     |            |
 | \* with Blood Stone | \*\* Blood Stone + Indrid Sigil |            |
 
+## Abilities
+
+- Intuition
+- Telekinesis
+- Dissipate
+
 ## Artifacts
 
 - Blood Stone
 - Indrid Sigil
+
+---
+
+## Book References
+
+**Chapter 1** - Age 8 at the baseball game, demonstrates Intuition for the first time. Adopted by M alongside Sam. At age 12, shows off Casting to a crowd at school. At 16, appears unexpectedly at Mrs. Chapel's fence and saves Sam from Stefan's gang. Reveals he and Rose are leaving for Quimblys. Sam feels betrayed.
+
+**Chapter 2** - Not physically present. The Headcaster reveals Adam was key to pending war efforts but left Quimblys approximately 6 days after Point Pleasant's destruction. His whereabouts are unknown. Search spells only find Gumberoos. Sam drives west hoping to find him.
+
+**Chapter 7** - His Spellbook is hidden underground by Love as part of Sam's strength training.
 
 ## Notes
 

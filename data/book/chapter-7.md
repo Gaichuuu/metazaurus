@@ -1,6 +1,10 @@
 # 7. The Incredibly Amazingly Effective Training Gizmo Box 9001, P9001 for short (Patent Pending)
 
-## Content
+<div class="credits">
+
+**Written by** Michael Waddell<br>
+
+</div>
 
 **Center Image:** Drawing of an open P9001 with some of the contents spilling out, Snipe's head popping out of the bag
 
@@ -163,5 +167,3 @@ At some point, Halloween comes, we don't dive too deeply into it this book, or t
 
 - What is in the rest of the P9001 kit? Do we ever see it again?
 - What are the purposes of the Nighttime Dark Parades?
-
----
