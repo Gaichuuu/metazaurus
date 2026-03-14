@@ -36,6 +36,11 @@ export const CATEGORIES: CategoryConfig[] = [
     label: "Book",
     listColumns: [{ key: "name", header: "Title", width: "w-full" }],
   },
+  {
+    type: "fanfic",
+    label: "Fanfic",
+    listColumns: [{ key: "name", header: "Title", width: "w-full" }],
+  },
 ];
 
 export function getCategoryConfig(type: string): CategoryConfig | undefined {

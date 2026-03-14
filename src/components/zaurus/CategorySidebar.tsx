@@ -8,6 +8,7 @@ import {
   MagazineIcon,
   MangaIcon,
   BookIcon,
+  FanBookIcon,
   CardIcon,
 } from "../icons/ZaurusIcons";
 
@@ -26,6 +27,7 @@ const categories: Category[] = [
   { id: "magazine", label: "Magazine", path: "/magazine", icon: <MagazineIcon /> },
   { id: "manga", label: "Manga", path: "/manga", icon: <MangaIcon /> },
   { id: "book", label: "Book", path: "/book", icon: <BookIcon /> },
+  { id: "fanfic", label: "Fanfic", path: "/fanfic", icon: <FanBookIcon /> },
   { id: "cards", label: "Cards", path: "/cards", icon: <CardIcon /> },
 ];
 
