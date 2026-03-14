@@ -1,3 +1,5 @@
+import { nightfallCards } from "./nightfallCards";
+
 export interface Card {
   number: number;
   name: string;
@@ -455,7 +457,7 @@ const cryptidNationCards: Card[] = [
   { number: 67, name: "Balancing Beam", filename: "67-159-Balancing-Beam.png" },
   { number: 68, name: "Powerup Blue", filename: "68-159-Powerup-Blue.png" },
   { number: 69, name: "Scattershot", filename: "69-159-Scattershot.png" },
-  { number: 70, name: "Antidote", filename: "70-169-Antidote.png" },
+  { number: 70, name: "Antidote", filename: "70-159-Antidote.png" },
   { number: 71, name: "Bookmark", filename: "71-159-Bookmark.png" },
   { number: 72, name: "Catnap", filename: "72-159-Catnap.png" },
   { number: 73, name: "Pass Trap", filename: "73-159-Pass-Trap.png" },
@@ -648,6 +650,14 @@ export const cardSets: CardSet[] = [
     totalCards: 159,
     cards: cryptidNationCards,
   },
+  {
+    id: "nightfall",
+    name: "Nightfall",
+    shortName: "NF",
+    cdnPath: "https://gaichu.b-cdn.net/mz/nf",
+    totalCards: 163,
+    cards: nightfallCards,
+  },
 ];
 
 export function getCardSet(id: string): CardSet | undefined {
@@ -655,5 +665,5 @@ export function getCardSet(id: string): CardSet | undefined {
 }
 
 export function getCardImageUrl(set: CardSet, card: Card): string {
-  return `${set.cdnPath}/${card.filename}`;
+  return `${set.cdnPath}/${encodeURIComponent(card.filename)}`;
 }
