@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import type { WikiEntry, CategoryType } from "../types/wiki";
+import { extractTitle, deriveSlug } from "../utils/slug";
 
 const markdownFiles = import.meta.glob("/data/**/*.md", {
   query: "?raw",
@@ -33,17 +33,6 @@ const PDF_CDN_BASE = {
   manga: "https://gaichu.b-cdn.net/mz/manga",
 } as const;
 
-function extractTitle(content: string, filename: string): string {
-  const h1Match = content.match(/^#\s+(.+)$/m);
-  if (h1Match) {
-    return h1Match[1].trim();
-  }
-  return filename
-    .replace(/\.md$/, "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
 function extractChapterNumber(filename: string): string {
   const match = filename.match(/(\d+)/);
   return match ? match[1] : "";
@@ -56,10 +45,7 @@ function pdfFilenameToName(filename: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function loadPdfsFromFolder(
-  folderPath: string,
-  category: CategoryType
-): WikiEntry[] {
+function loadPdfsFromFolder(folderPath: string, category: CategoryType): WikiEntry[] {
   const entries: WikiEntry[] = [];
   const cdnBase = PDF_CDN_BASE[folderPath as keyof typeof PDF_CDN_BASE];
   const filenames = PDF_MANIFEST[folderPath] || [];
@@ -92,20 +78,14 @@ function loadPdfsFromFolder(
   });
 }
 
-function loadMarkdownFromFolder(
-  folderPath: string,
-  category: CategoryType
-): WikiEntry[] {
+function loadMarkdownFromFolder(folderPath: string, category: CategoryType): WikiEntry[] {
   const entries: WikiEntry[] = [];
 
   for (const [path, content] of Object.entries(markdownFiles)) {
-    if (
-      path.startsWith(`/data/${folderPath}/`) &&
-      !path.includes(".chapters-draft")
-    ) {
+    if (path.startsWith(`/data/${folderPath}/`) && !path.includes(".chapters-draft")) {
       const filename = path.split("/").pop() || "";
-      const slug = filename.replace(/\.md$/, "");
       const name = extractTitle(content, filename);
+      const slug = deriveSlug(name, filename);
       const chapter = extractChapterNumber(filename);
 
       entries.push({
@@ -142,6 +122,8 @@ function loadCategoryData(category: CategoryType): WikiEntry[] {
       return loadMarkdownFromFolder("codex", "codex");
     case "book":
       return loadMarkdownFromFolder("book", "book");
+    case "fanfic":
+      return loadMarkdownFromFolder("fanfic", "fanfic");
     case "magazine":
       return loadPdfsFromFolder("magazine", "magazine");
     case "manga":
@@ -159,28 +141,26 @@ const dataCache: Record<CategoryType, WikiEntry[]> = {
   magazine: loadCategoryData("magazine"),
   manga: loadCategoryData("manga"),
   book: loadCategoryData("book"),
+  fanfic: loadCategoryData("fanfic"),
 };
+
+const allEntriesCache: WikiEntry[] = Object.values(dataCache).flat();
+
+export function getAllEntries(): WikiEntry[] {
+  return allEntriesCache;
+}
 
 export function useCategoryList(category: CategoryType): {
   entries: WikiEntry[];
-  loading: boolean;
 } {
-  const entries = useMemo(() => {
-    return dataCache[category] || [];
-  }, [category]);
-
-  return { entries, loading: false };
+  return { entries: dataCache[category] || [] };
 }
 
 export function useWikiEntry(
   category: CategoryType,
-  slug: string
-): { entry: WikiEntry | undefined; loading: boolean } {
+  slug: string,
+): { entry: WikiEntry | undefined } {
   const { entries } = useCategoryList(category);
-
-  const entry = useMemo(() => {
-    return entries.find((e) => e.slug === slug);
-  }, [entries, slug]);
-
-  return { entry, loading: false };
+  const entry = entries.find((e) => e.slug === slug);
+  return { entry };
 }

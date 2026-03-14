@@ -2,79 +2,6 @@ interface IconProps {
   className?: string;
 }
 
-export function HomeIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <path d="M12 3L4 9v12h5v-7h6v7h5V9l-8-6z" />
-    </svg>
-  );
-}
-
-export function SearchIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M14 14l6 6" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-export function SettingsIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <circle cx="12" cy="12" r="3" />
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-export function InfoIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M12 7v1M12 11v6" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-export function BackIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-    >
-      <path d="M10 2L4 8l6 6" fill="none" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
 export function UserIcon({ className }: IconProps) {
   return (
     <svg
@@ -100,21 +27,6 @@ export function MapIcon({ className }: IconProps) {
       fill="currentColor"
     >
       <path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5zm0 7c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-    </svg>
-  );
-}
-
-export function ClockIcon({ className }: IconProps) {
-  return (
-    <svg
-      className={className}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-    >
-      <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M8 4v4l3 2" fill="none" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }
@@ -193,7 +105,7 @@ export function GlobeIcon({ className }: IconProps) {
   );
 }
 
-export function ScrollIcon({ className }: IconProps) {
+export function FanBookIcon({ className }: IconProps) {
   return (
     <svg
       className={className}
@@ -202,8 +114,28 @@ export function ScrollIcon({ className }: IconProps) {
       viewBox="0 0 16 16"
       fill="currentColor"
     >
-      <path d="M4 2c-1 0-2 1-2 2v8c0 1 1 2 2 2h8c1 0 2-1 2-2V4c0-1-1-2-2-2" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M6 5h4M6 8h4M6 11h2" stroke="currentColor" strokeWidth="1" />
+      <path d="M1 2c0-0.5 0.5-1 1-1h12c0.5 0 1 0.5 1 1v12c0 0.5-0.5 1-1 1H2c-0.5 0-1-0.5-1-1V2z" fill="none" stroke="currentColor" strokeWidth="2" />
+      <line x1="3.5" y1="1" x2="3.5" y2="15" stroke="currentColor" strokeWidth="1" />
+      <path
+        d="M9 11.5l-1-3H5l2.5-1.8-1-3L9 5.5l2.5-1.8-1 3L13 8.5h-3z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
+  );
+}
+
+export function SearchIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="currentColor"
+    >
+      <circle cx="6.5" cy="6.5" r="4.5" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path d="M10 10l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
