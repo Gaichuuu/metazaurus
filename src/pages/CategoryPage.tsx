@@ -6,7 +6,9 @@ import { PdfViewer } from "../components/content/PdfViewer";
 import { LockedContent } from "../components/content/LockedContent";
 import { getCategoryConfig } from "../config/categories";
 import { getSecretConfig, isFileUnlocked, unlockFile } from "../config/secretFiles";
+import { isValidCategory } from "../types/wiki";
 import type { CategoryType, WikiEntry } from "../types/wiki";
+import { isTouchDevice } from "../utils/isTouchDevice";
 
 interface EntryContentProps {
   entry: WikiEntry;
@@ -57,14 +59,24 @@ function EntryContent({
   return <div className="h-full overflow-y-auto p-4">{content}</div>;
 }
 
-const isMobile = () => window.matchMedia("(pointer: coarse)").matches;
-
 export function CategoryPage() {
   const { category, slug } = useParams<{ category: string; slug: string }>();
+  const categoryType: CategoryType = isValidCategory(category ?? "")
+    ? category as CategoryType
+    : "characters";
+
+  return <CategoryPageContent key={categoryType} categoryType={categoryType} slug={slug} />;
+}
+
+interface CategoryPageContentProps {
+  categoryType: CategoryType;
+  slug: string | undefined;
+}
+
+function CategoryPageContent({ categoryType, slug }: CategoryPageContentProps) {
   const navigate = useNavigate();
-  const categoryType = (category || "characters") as CategoryType;
-  const { entries, loading } = useCategoryList(categoryType);
-  const [listOpen, setListOpen] = useState(isMobile);
+  const { entries } = useCategoryList(categoryType);
+  const [listOpen, setListOpen] = useState(isTouchDevice);
   const [unlockedFiles, setUnlockedFiles] = useState<Set<string>>(new Set());
   const config = getCategoryConfig(categoryType);
 
@@ -74,27 +86,26 @@ export function CategoryPage() {
     }
   }, [slug, entries, categoryType, navigate]);
 
-  useEffect(() => {
-    if (isMobile()) {
-      setListOpen(true);
-    }
-  }, [categoryType]);
-
   const selectedEntry = useMemo(() => {
     if (entries.length === 0) return null;
     if (slug) {
       const found = entries.find((e) => e.slug === slug);
       if (found) return found;
     }
-    return entries[0];
+    return null;
   }, [entries, slug]);
 
-  if (loading) {
-    return <div className="zaurus-loading">Loading...</div>;
-  }
+  useEffect(() => {
+    if (selectedEntry) {
+      document.title = `${selectedEntry.name} — MetaZaurus`;
+    } else if (config) {
+      document.title = `${config.label} — MetaZaurus`;
+    }
+    return () => { document.title = "MetaZaurus"; };
+  }, [selectedEntry, config]);
 
   if (entries.length === 0) {
-    return <div className="zaurus-empty">No entries found for {category}</div>;
+    return <div className="zaurus-empty">No entries found for {categoryType}</div>;
   }
 
   const handleEntrySelect = (entrySlug: string) => {
@@ -114,15 +125,17 @@ export function CategoryPage() {
       </button>
 
       {listOpen && (
-        <div
+        <button
+          type="button"
           className="md:hidden absolute inset-0 bg-black/50 z-30"
           onClick={() => setListOpen(false)}
+          aria-label="Close sidebar"
         />
       )}
 
       <div
         className={`
-          flex-shrink-0 flex flex-col overflow-hidden bg-[#9ead6f]
+          flex-shrink-0 flex flex-col overflow-hidden bg-zaurus-lcd-bg
           absolute md:relative inset-y-0 left-0 z-40
           w-64 md:w-1/3 md:max-w-xs
           transform transition-transform duration-200 ease-in-out
@@ -165,7 +178,7 @@ export function CategoryPage() {
       <div className="flex-1 overflow-hidden">
         {selectedEntry ? (
           selectedEntry.pdfUrl ? (
-            <PdfViewer url={selectedEntry.pdfUrl} />
+            <PdfViewer key={selectedEntry.pdfUrl} url={selectedEntry.pdfUrl} />
           ) : (
             <EntryContent
               entry={selectedEntry}
@@ -174,6 +187,8 @@ export function CategoryPage() {
               onUnlock={(key) => setUnlockedFiles((prev) => new Set(prev).add(key))}
             />
           )
+        ) : slug ? (
+          <div className="zaurus-empty p-4">Entry not found: {slug}</div>
         ) : (
           <div className="zaurus-empty p-4">Select an entry to view details</div>
         )}

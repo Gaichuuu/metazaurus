@@ -1,8 +1,9 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { Grid, type CellComponentProps } from "react-window";
 import { cardSets, getCardImageUrl } from "../config/cardSets";
 import type { CardSet, Card } from "../config/cardSets";
 import { CARD_GRID } from "../constants";
+import { isTouchDevice } from "../utils/isTouchDevice";
 
 interface SelectedCard {
   card: Card;
@@ -14,7 +15,6 @@ interface CardGridViewProps {
   onCardClick: (card: Card) => void;
 }
 
-/** Props passed via cellProps to the Grid */
 interface CardCellData {
   cards: Card[];
   cardSet: CardSet;
@@ -30,6 +30,7 @@ function CardCell({
 }: CellComponentProps<CardCellData>) {
   const { cards, cardSet, columnCount, onCardClick } = cellData;
   const index = rowIndex * columnCount + columnIndex;
+  const [loaded, setLoaded] = useState(false);
 
   if (index >= cards.length) {
     return <div style={style} />;
@@ -40,14 +41,17 @@ function CardCell({
     <div style={style} className="p-1">
       <button
         type="button"
-        className="card-slot card-slot-interactive w-full h-full"
+        className="card-slot card-slot-interactive w-full h-full relative"
         onClick={() => onCardClick(card)}
       >
+        {!loaded && <div className="card-skeleton" />}
         <img
           src={getCardImageUrl(cardSet, card)}
           alt={`${card.number}. ${card.name}${card.variant ? ` (${card.variant})` : ""}`}
-          className="card-image"
+          className={`card-image ${loaded ? "opacity-100" : "opacity-0"}`}
           loading="lazy"
+          onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(true)}
         />
       </button>
     </div>
@@ -84,11 +88,9 @@ function CardGridView({ cardSet, onCardClick }: CardGridViewProps) {
     const { width, height } = dimensions;
     if (width === 0 || height === 0) return null;
 
-    // Use percentage-based column width - react-window v2 supports this
+    // Use percentage-based column width
     const columnWidthPercent = `${100 / columnCount}%`;
 
-    // Calculate row height based on card aspect ratio
-    // Approximate column width in pixels for row height calculation
     const columnWidthPx = width / columnCount;
     const cardWidth = columnWidthPx - CARD_GRID.GAP;
     const rowHeight = cardWidth / CARD_GRID.ASPECT_RATIO + CARD_GRID.GAP;
@@ -109,12 +111,11 @@ function CardGridView({ cardSet, onCardClick }: CardGridViewProps) {
       columnCount,
       onCardClick,
     }),
-    [cardSet, columnCount, onCardClick]
+    [cardSet, columnCount, onCardClick],
   );
 
-  // Use lighter background for Sample set (black card borders blend with dark bg)
-  const bgClass =
-    cardSet.id === "sample" ? "cards-binder-bg-light" : "cards-binder-bg";
+  // Use lighter background for Sample set
+  const bgClass = cardSet.id === "sample" ? "cards-binder-bg-light" : "cards-binder-bg";
 
   return (
     <div className={`${bgClass} h-full w-full p-2`}>
@@ -155,10 +156,13 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${card.name} card detail`}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
       onClick={onClose}
     >
-      <div className="relative max-w-md w-full">
+      <div className="relative max-w-md w-full" onClick={(e) => e.stopPropagation()}>
         <img
           src={getCardImageUrl(cardSet, card)}
           alt={`${card.number}. ${card.name}${card.variant ? ` (${card.variant})` : ""}`}
@@ -167,8 +171,7 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
         <div className="mt-3 text-center text-white font-mono">
           <div className="text-lg font-bold">{card.name}</div>
           <div className="text-sm opacity-70">
-            #{card.number} {card.variant ? `(${card.variant})` : ""} -{" "}
-            {cardSet.name}
+            #{card.number} {card.variant ? `(${card.variant})` : ""} - {cardSet.name}
           </div>
         </div>
       </div>
@@ -176,13 +179,9 @@ function CardModal({ selectedCard, onClose }: CardModalProps) {
   );
 }
 
-const isMobile = () => window.matchMedia("(pointer: coarse)").matches;
-
 export function CardsPage() {
-  const [selectedSetId, setSelectedSetId] = useState<string>(
-    cardSets[0]?.id ?? ""
-  );
-  const [listOpen, setListOpen] = useState(isMobile);
+  const [selectedSetId, setSelectedSetId] = useState<string>(cardSets[0]?.id ?? "");
+  const [listOpen, setListOpen] = useState(isTouchDevice);
   const [selectedCard, setSelectedCard] = useState<SelectedCard | null>(null);
 
   const selectedSet = useMemo(() => {
@@ -194,11 +193,16 @@ export function CardsPage() {
     setListOpen(false);
   };
 
-  const handleCardClick = (card: Card) => {
-    if (selectedSet) {
-      setSelectedCard({ card, cardSet: selectedSet });
-    }
-  };
+  const handleCloseModal = useCallback(() => setSelectedCard(null), []);
+
+  const handleCardClick = useCallback(
+    (card: Card) => {
+      if (selectedSet) {
+        setSelectedCard({ card, cardSet: selectedSet });
+      }
+    },
+    [selectedSet],
+  );
 
   return (
     <div className="flex h-full relative">
@@ -212,15 +216,17 @@ export function CardsPage() {
       </button>
 
       {listOpen && (
-        <div
+        <button
+          type="button"
           className="md:hidden absolute inset-0 bg-black/50 z-30"
           onClick={() => setListOpen(false)}
+          aria-label="Close sidebar"
         />
       )}
 
       <div
         className={`
-          flex-shrink-0 flex flex-col overflow-hidden bg-[#9ead6f]
+          flex-shrink-0 flex flex-col overflow-hidden bg-zaurus-lcd-bg
           absolute md:relative inset-y-0 left-0 z-40
           w-64 md:w-1/3 md:max-w-xs
           transform transition-transform duration-200 ease-in-out
@@ -260,10 +266,7 @@ export function CardsPage() {
       </div>
 
       {selectedCard && (
-        <CardModal
-          selectedCard={selectedCard}
-          onClose={() => setSelectedCard(null)}
-        />
+        <CardModal selectedCard={selectedCard} onClose={handleCloseModal} />
       )}
     </div>
   );
