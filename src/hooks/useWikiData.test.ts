@@ -1,33 +1,5 @@
 import { describe, it, expect } from "vitest";
-
-/**
- * Pure function tests for useWikiData utilities
- * These test the data transformation logic without React hooks
- */
-
-// Re-implement the pure functions for testing (they're not exported from the module)
-function extractTitle(content: string, filename: string): string {
-  const h1Match = content.match(/^#\s+(.+)$/m);
-  if (h1Match) {
-    return h1Match[1].trim();
-  }
-  return filename
-    .replace(/\.md$/, "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-function extractChapterNumber(filename: string): string {
-  const match = filename.match(/(\d+)/);
-  return match ? match[1] : "";
-}
-
-function pdfFilenameToName(filename: string): string {
-  return filename
-    .replace(/\.pdf$/i, "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
+import { extractTitle, titleToSlug } from "../utils/slug";
 
 describe("extractTitle", () => {
   it("extracts title from markdown h1 heading", () => {
@@ -65,6 +37,46 @@ describe("extractTitle", () => {
     expect(extractTitle(content, "lowercase-words.md")).toBe("Lowercase Words");
   });
 });
+
+describe("titleToSlug", () => {
+  it("converts numbered chapter title to slug", () => {
+    expect(titleToSlug("6. Crossing the Crosswick")).toBe("6-crossing-the-crosswick");
+  });
+
+  it("handles multi-digit chapter numbers", () => {
+    expect(titleToSlug("12. The Final Battle")).toBe("12-the-final-battle");
+  });
+
+  it("strips special characters", () => {
+    expect(titleToSlug("1. Cryptid Nation")).toBe("1-cryptid-nation");
+  });
+
+  it("handles commas and parentheses", () => {
+    expect(titleToSlug("7. The Incredibly Amazingly Effective Training Gizmo Box 9001, P9001 for short (Patent Pending)"))
+      .toBe("7-the-incredibly-amazingly-effective-training-gizmo-box-9001-p9001-for-short-patent-pending");
+  });
+
+  it("returns null for non-numbered titles", () => {
+    expect(titleToSlug("Adam Ackler")).toBeNull();
+  });
+
+  it("returns null for titles without period after number", () => {
+    expect(titleToSlug("Chapter 6")).toBeNull();
+  });
+});
+
+// These functions are private to useWikiData, so we re-implement for testing
+function extractChapterNumber(filename: string): string {
+  const match = filename.match(/(\d+)/);
+  return match ? match[1] : "";
+}
+
+function pdfFilenameToName(filename: string): string {
+  return filename
+    .replace(/\.pdf$/i, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 describe("extractChapterNumber", () => {
   it("extracts number from chapter filename", () => {
@@ -116,7 +128,6 @@ describe("sorting logic", () => {
     metadata: { chapter: string };
   }
 
-  // Replicate the sorting logic from the module
   function sortEntries(entries: SortableEntry[]): SortableEntry[] {
     return [...entries].sort((a, b) => {
       const aNum = parseInt(a.metadata.chapter || "0", 10);
@@ -146,13 +157,13 @@ describe("sorting logic", () => {
     expect(sorted.map((e) => e.name)).toEqual(["Alpha", "Beta", "Zebra"]);
   });
 
+  // Items without chapter numbers get 0, so they sort first alphabetically
   it("puts numbered entries before unnumbered ones", () => {
     const entries = [
       { name: "Appendix", metadata: { chapter: "" } },
       { name: "Chapter 1", metadata: { chapter: "1" } },
     ];
     const sorted = sortEntries(entries);
-    // Items without chapter numbers get 0, so they sort first alphabetically
     expect(sorted[0].name).toBe("Appendix");
   });
 });
