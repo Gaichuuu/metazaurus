@@ -19,10 +19,11 @@ export const secretFiles: Record<string, SecretFileConfig> = {
   "world/timeline": {
     locked: {
       password: "veil",
-      hint: "Ever since the ____ has shattered",
+      hint: "Ever since the ____ has shattered...",
     },
   },
-  "book/7-the-incredibly-amazingly-effective-training-gizmo-box-9001-p9001-for-short-patent-pending": {},
+  "book/7-the-incredibly-amazingly-effective-training-gizmo-box-9001-p9001-for-short-patent-pending":
+    {},
   "characters/crowley": {
     locked: {
       password: ["us", "usa", "united states"],
@@ -32,7 +33,7 @@ export const secretFiles: Record<string, SecretFileConfig> = {
   "world/evergreen-casters": {
     locked: {
       password: ["thirteen", "13"],
-      hint: "How many Evergreen Casters are officially known?",
+      hint: "How many Evergreen Casters are there?",
     },
   },
 };
