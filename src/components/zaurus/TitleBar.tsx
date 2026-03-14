@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import logoSvg from "../../assets/logo.svg";
+import { SearchIcon } from "../icons/ZaurusIcons";
 
-export function TitleBar() {
+interface TitleBarProps {
+  onSearchClick: () => void;
+}
+
+export function TitleBar({ onSearchClick }: TitleBarProps) {
   return (
     <div className="lcd-titlebar">
       <Link
@@ -19,6 +24,14 @@ export function TitleBar() {
         />
         MetaZaurus
       </Link>
+      <button
+        onClick={onSearchClick}
+        className="lcd-btn search-titlebar-btn"
+        aria-label="Search"
+        title="Search (⌘K)"
+      >
+        <SearchIcon />
+      </button>
     </div>
   );
 }
