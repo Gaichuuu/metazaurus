@@ -1,5 +1,7 @@
 import type { WikiEntry, CategoryType } from "../types/wiki";
 import { extractTitle, deriveSlug } from "../utils/slug";
+import { getSecretConfig } from "../config/secretFiles";
+import { cardSets } from "../config/cardSets";
 
 const markdownFiles = import.meta.glob("/data/**/*.md", {
   query: "?raw",
@@ -148,6 +150,31 @@ const allEntriesCache: WikiEntry[] = Object.values(dataCache).flat();
 
 export function getAllEntries(): WikiEntry[] {
   return allEntriesCache;
+}
+
+export interface WikiStats {
+  entries: number;
+  classified: number;
+  cards: number;
+}
+
+const wikiStatsCache: WikiStats = (() => {
+  let entries = 0;
+  let classified = 0;
+  for (const entry of allEntriesCache) {
+    const config = getSecretConfig(entry.category, entry.slug);
+    if (config?.locked) {
+      classified++;
+    } else {
+      entries++;
+    }
+  }
+  const cards = cardSets.reduce((sum, set) => sum + set.cards.length, 0);
+  return { entries, classified, cards };
+})();
+
+export function getWikiStats(): WikiStats {
+  return wikiStatsCache;
 }
 
 export function useCategoryList(category: CategoryType): {

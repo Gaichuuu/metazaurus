@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { extractTitle, titleToSlug } from "../utils/slug";
+import { extractTitle, titleToSlug, deriveSlug } from "../utils/slug";
 
 describe("extractTitle", () => {
   it("extracts title from markdown h1 heading", () => {
@@ -62,6 +62,20 @@ describe("titleToSlug", () => {
 
   it("returns null for titles without period after number", () => {
     expect(titleToSlug("Chapter 6")).toBeNull();
+  });
+});
+
+describe("deriveSlug", () => {
+  it("uses titleToSlug for numbered titles", () => {
+    expect(deriveSlug("6. Crossing the Crosswick", "chapter-6.md")).toBe("6-crossing-the-crosswick");
+  });
+
+  it("falls back to filename without extension for non-numbered titles", () => {
+    expect(deriveSlug("Adam Ackler", "adam-ackler.md")).toBe("adam-ackler");
+  });
+
+  it("strips .md from filename fallback", () => {
+    expect(deriveSlug("Some Entry", "some-entry.md")).toBe("some-entry");
   });
 });
 

@@ -6,6 +6,9 @@ import {
   BOOT_STEP_DELAY_MS,
   BOOT_SEQUENCE_TOTAL_STEPS,
 } from "../constants";
+import { getWikiStats } from "../hooks/useWikiData";
+
+const { entries, classified, cards } = getWikiStats();
 
 const BOOT_MESSAGES = [
   "Initializing cryptid database...",
@@ -85,7 +88,7 @@ export function HomePage() {
         <div className="homepage-header flex justify-between items-end mt-2 text-base">
           <div className="homepage-footer-left">
             <div>CRYPTID NATION INTELLIGENCE SYSTEM</div>
-            <div className="opacity-60">35 ENTRIES | 3 CLASSIFIED | 255 CARDS</div>
+            <div className="opacity-60">{entries} ENTRIES | {classified} CLASSIFIED | {cards} CARDS</div>
           </div>
           <div className="homepage-footer-right text-right">
             <div className="homepage-copyright text-2xl tracking-widest">
