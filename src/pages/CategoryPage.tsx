@@ -118,7 +118,7 @@ function CategoryPageContent({ categoryType, slug }: CategoryPageContentProps) {
       <button
         type="button"
         onClick={() => setListOpen(!listOpen)}
-        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-amber-600 text-white shadow-lg flex items-center justify-center"
+        className="md:hidden absolute bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-zaurus-amber text-zaurus-lcd-light shadow-lg flex items-center justify-center"
         aria-label={listOpen ? "Close list" : "Open list"}
       >
         {listOpen ? "✕" : "☰"}
@@ -127,7 +127,7 @@ function CategoryPageContent({ categoryType, slug }: CategoryPageContentProps) {
       {listOpen && (
         <button
           type="button"
-          className="md:hidden absolute inset-0 bg-black/50 z-30"
+          className="md:hidden absolute inset-0 bg-zaurus-overlay/50 z-30"
           onClick={() => setListOpen(false)}
           aria-label="Close sidebar"
         />
